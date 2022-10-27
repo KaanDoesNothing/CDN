@@ -6,6 +6,11 @@ import express, { Request, Response } from "express";
 import expressFileUpload from "express-fileupload";
 import expressSession from "express-session";
 import path from "path";
+import fs from "fs";
+
+const uploadsDir = path.join(__dirname, "../uploads");
+
+fs.mkdirSync(uploadsDir, {recursive: true});
 
 import {db} from "./db";
 import { defaultParams, getUser, isAuthenticated } from "./middleware";
@@ -22,7 +27,7 @@ app.locals.modules = {
 }
 
 app.set("view engine", "pug").set("views", path.join(__dirname, "../views"));
-app.use(express.static(path.join(__dirname, "../uploads")));
+app.use(express.static(uploadsDir));
 
 const sessionMiddleware = expressSession({
     secret: "hmmm",
