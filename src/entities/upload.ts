@@ -1,5 +1,6 @@
 import { User } from "./user";
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Collection } from "./collection";
 
 @Entity("upload")
 export class Upload extends BaseEntity {
@@ -8,6 +9,9 @@ export class Upload extends BaseEntity {
 
     @ManyToOne(() => User, (user) => user.uploads)
     author: User;
+
+    @ManyToOne(() => Collection, (collection) => collection.files)
+    collections: Collection[]
 
     @Column()
     upload_type: string;

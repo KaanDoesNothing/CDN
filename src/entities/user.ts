@@ -1,6 +1,7 @@
 import { Upload } from "./upload";
 import { IsEmail, Length } from "class-validator";
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Collection } from "./collection";
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -13,6 +14,9 @@ export class User extends BaseEntity {
 
     @Column()
     token: string;
+
+    @OneToMany(() => Collection, (collection) => collection.author)
+    collections: Collection[];
 
     @OneToMany(() => Upload, (upload) => upload.author)
     uploads: Upload[];

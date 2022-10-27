@@ -14,6 +14,7 @@ fs.mkdirSync(uploadsDir, {recursive: true});
 
 import {db} from "./db";
 import { defaultParams, getUser, isAuthenticated } from "./middleware";
+import { Collection } from "./entities/collection";
 
 db.connect();
 
@@ -43,9 +44,13 @@ app.use(expressFileUpload({
 
 app.use(defaultParams);
 
+app.get("/auth/session", isAuthenticated, getUser, (req, res) => {
+    res.json(res.locals.user);
+});
+
 app.get("/auth/login", (req, res) => {
     return res.render("auth/login");
-})
+});
 
 app.post("/auth/login", async (req, res) => {
     const {email, password} = req.body;
@@ -97,6 +102,21 @@ app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res
     const fileTypes = await Upload.createQueryBuilder("upload").select("DISTINCT file_type").execute();
 
     res.render("dashboard/uploads", {fileTypes});
+});
+
+app.get("/dashboard/collection/create/:name", isAuthenticated, getUser, async (req, res) => {
+    const {name} = req.params;
+    let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
+    if(!user) return;
+
+    const newCollection = Collection.create({name});
+
+    await newCollection.save();
+
+    user.collections.push(newCollection);
+    await user.save();
+
+    return res.sendStatus(200);
 });
 
 app.get("/:filename", (async (req, res) => {

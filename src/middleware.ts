@@ -17,7 +17,7 @@ export const defaultParams = (req: Request, res: Response, next: NextFunction) =
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
     const {file_type, file_name} = req.query;
 
-    let user = await User.findOne({where: {token: req.session.user}});
+    let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
 
     if(user) {
         if(file_type) {
