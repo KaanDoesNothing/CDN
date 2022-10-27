@@ -36,6 +36,10 @@ app.use(expressFileUpload({
     createParentPath: true
 }));
 
+app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
+    res.render("dashboard/uploads");
+});
+
 app.get("/:filename", (async (req, res) => {
     const {filename} = req.params;
 
@@ -53,28 +57,28 @@ app.get("/:filename", (async (req, res) => {
 }));
 
 app.get("/auth/login", (req, res) => {
-    return res.render("login");
+    return res.render("auth/login");
 })
 
 app.post("/auth/login", async (req, res) => {
     const {email, password} = req.body;
 
-    if(!email) return res.redirect("/auth/login");
+    if(!email) return res.render("error", {message: "Provide an email!"});
 
     const existingUser = await User.findOne({where: {email: email?.toString()}});
-    if(!existingUser) return res.redirect("/auth/login");
+    if(!existingUser) return res.render("error", {message: "User doesn't exist!"});
 
     const passwordCorrect = password === existingUser.password || await comparePassword(password, existingUser.password);
 
-    if(!passwordCorrect) return res.redirect("/auth/login");
+    if(!passwordCorrect) return res.render("error", {message: "Invalid password"});
 
     (req.session as any).user = existingUser.token;
 
-    return res.redirect("/");
+    return res.redirect("/dashboard/uploads");
 });
 
 app.get("/auth/register", (req, res) => {
-    return res.render("register");
+    return res.render("auth/register");
 });
 
 app.post("/auth/register", async (req, res) => {
@@ -93,7 +97,9 @@ app.post("/auth/register", async (req, res) => {
 
     await user.save();
 
-    return res.redirect("/");
+    (req.session as any).user = user.token;
+
+    return res.redirect("/dashboard/uploads");
 });
 
 app.post("/upload", async (req, res) => {
@@ -136,10 +142,6 @@ app.post("/upload", async (req, res) => {
             url: `https://${req.hostname}/${file.name}`
         }
     });
-});
-
-app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
-    res.render("index");
 });
 
 app.listen(8006);
