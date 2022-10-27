@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { Upload } from "./entities/upload";
 import { User } from "./entities/user";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
@@ -15,31 +16,22 @@ export const defaultParams = (req: Request, res: Response, next: NextFunction) =
 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
     const {file_type, file_name} = req.query;
-    let searchQuery: any = {
-        where: {
-            token: req.session.user
-        }
-    }
 
-    if(file_type) {
-        searchQuery = {
-            where: {
-                token: req.session.user,
-                uploads: {file_type}
+    let user = await User.findOne({where: {token: req.session.user}});
+
+    if(user) {
+        if(file_type) {
+            user.uploads = await Upload.find({where: {author: {email: user.email}, file_type: file_type as string}, order: {created: "DESC"}});
+        }else {
+            user.uploads = await Upload.find({where: {author: {email: user.email}}, order: {created: "DESC"}});
+
+            if(file_name) {
+                user.uploads = user.uploads.filter(row => row.file_name.toLowerCase().includes((file_name as string).toLocaleLowerCase()));
             }
         }
-    }
-    // }else if(file_name) {
-    //     searchQuery = {
-    //         where: {
-    //             token: req.session,
-    //             uploads: {file_name}
-    //         }
-    //     }
-    // }
-    const user = await User.findOne({...searchQuery, relations: {uploads: true}, order: {uploads: {created: "DESC"}}});
 
-    res.locals.user = user;
+        res.locals.user = user;
+    }
 
     next();
 }
