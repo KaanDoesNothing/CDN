@@ -2,7 +2,21 @@ extends ../layouts/dashboard
 
 block body
     div.p-5
-        table(class="table w-full")
+        div.flex.justify-center
+            ul.menu.menu-horizontal.bg-base-100.p-20
+                li
+                    form.form-control(action="/dashboard/uploads" method="get").btn-group
+                        input(class="input input-ghost w-full", type="text", name="file_name", placeholder="Search")
+                li(tabindex="0")
+                    span Type
+                    ul.bg-base-100
+                        for row in fileTypes
+                            li
+                                a(href=`/dashboard/uploads?file_type=${row.file_type}`)=row.file_type
+                //- li
+                //-     a Item 3
+
+        table(class="table w-full -z-40")
                 thead
                     tr
                         th Name

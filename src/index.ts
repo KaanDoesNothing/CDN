@@ -94,7 +94,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
-    res.render("dashboard/uploads");
+    const fileTypes = await Upload.createQueryBuilder("upload").select("DISTINCT file_type").execute();
+
+    res.render("dashboard/uploads", {fileTypes});
 });
 
 app.get("/:filename", (async (req, res) => {
