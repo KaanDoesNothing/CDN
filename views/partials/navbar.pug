@@ -2,5 +2,8 @@
   .navbar-start
     a.btn.btn-ghost.normal-case.text-xl(href="/") CDN
   .navbar-end
-    if user
+    if authenticated
       a.btn.btn-ghost.normal-case(href="/dashboard/uploads") Dashboard
+    else
+      a.btn.btn-ghost.normal-case(href="/auth/register") Register
+      a.btn.btn-ghost.normal-case(href="/auth/login") Login

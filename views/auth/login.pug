@@ -5,12 +5,6 @@ block body
         .card.w-80.bg-base-100.shadow-xl.m-1.text-primary-content
             .card-body
                 h2.card-title Login
-                div(id="error", class="hidden")
-                    br
-                    div.toast.toast-top.toast-center
-                        div.alert.alert-warning
-                            div
-                                span=error
                 form.form-control(action="/auth/login" method="post")
                     label.label
                         span.label-text Email

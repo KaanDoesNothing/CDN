@@ -8,7 +8,7 @@ import expressSession from "express-session";
 import path from "path";
 
 import {db} from "./db";
-import { getUser, isAuthenticated } from "./middleware";
+import { defaultParams, getUser, isAuthenticated } from "./middleware";
 
 db.connect();
 
@@ -36,25 +36,7 @@ app.use(expressFileUpload({
     createParentPath: true
 }));
 
-app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
-    res.render("dashboard/uploads");
-});
-
-app.get("/:filename", (async (req, res) => {
-    const {filename} = req.params;
-
-    const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
-
-    if(!file) return res.json({error: "File doesn't exist!"});
-
-    const filePath = path.join(__dirname, "../uploads", file.file_id);
-
-    res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
-    res.setHeader("Content-Transfer-Encoding", "binary");
-    res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
-
-    return res.sendFile(filePath);
-}));
+app.use(defaultParams);
 
 app.get("/auth/login", (req, res) => {
     return res.render("auth/login");
@@ -101,6 +83,30 @@ app.post("/auth/register", async (req, res) => {
 
     return res.redirect("/dashboard/uploads");
 });
+
+app.get("/", (req, res) => {
+    return res.render("home");
+});
+
+app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
+    res.render("dashboard/uploads");
+});
+
+app.get("/:filename", (async (req, res) => {
+    const {filename} = req.params;
+
+    const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
+
+    if(!file) return res.json({error: "File doesn't exist!"});
+
+    const filePath = path.join(__dirname, "../uploads", file.file_id);
+
+    res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
+    res.setHeader("Content-Transfer-Encoding", "binary");
+    res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
+
+    return res.sendFile(filePath);
+}));
 
 app.post("/upload", async (req, res) => {
     const key = req.query["key"] as string;

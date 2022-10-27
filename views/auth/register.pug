@@ -1,14 +1,16 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Register
-    body 
-        form(method="post", action="/register")
-            label Email
-            input(type="text", name="email")
-            label Password
-            input(type="text", name="password")
-            button(type="submit") Register
+extends ../layouts/main
+
+block body
+    .flex.justify-center.mt-10
+        .card.w-80.bg-base-100.shadow-xl.m-1.text-primary-content
+            .card-body
+                h2.card-title Register
+                form.form-control(action="/auth/register" method="post")
+                    label.label
+                        span.label-text Email
+                    input.input.input-bordered.w-full.max-w-xs(type="text" name="email")
+                    label.label
+                        span.label-text Password
+                    input.input.input-bordered.w-full.max-w-xs(type="password" name="password")
+                    .card-actions.text-center.mt-2
+                        button.btn.btn-ghost.btn-block(type="submit") Register
