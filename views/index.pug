@@ -1,0 +1,19 @@
+extends ./layouts/dashboard
+
+block body
+    div.p-5
+        table(class="table w-full")
+                thead
+                    tr
+                        th Name
+                        th Type
+                        th Size
+                        th Created
+                tbody()
+                    for upload in user.uploads
+                        tr
+                            th
+                                a(href=`/${upload.file_name}`)=upload.file_name
+                            th=upload.file_type
+                            th=modules.formatBytes(upload.file_size)
+                            th=upload.created
