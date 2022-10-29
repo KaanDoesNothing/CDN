@@ -1,0 +1,31 @@
+extends ../layouts/dashboard
+
+block body
+  .flex.justify-center.mt-10
+    .card.w-100.bg-base-100.shadow-xl.m-1.text-primary-content
+      .card-body
+        h2.card-title Settings
+        a#download_config.btn Download Config File
+        .card-actions.text-center
+          p
+            b Do not share your token with anyone!
+            
+  script.
+    const configFile = {
+        Version: "14.1.0",
+        Name: "Localhost",
+        DestinationType: "ImageUploader, FileUploader",
+        RequestMethod: "POST",
+        RequestURL: "https://cdn.kaanlikescoding.me/upload",
+        Parameters: {
+            key: "#{user.token}"
+        },
+        Body: "MultipartFormData",
+        FileFormName: "file",
+        URL: "{json:file.url}",
+        DeletionURL: "{json:file.delete_url}"
+    }
+
+    const downloadButton = document.querySelector("#download_config");
+    downloadButton.setAttribute("href", `data:'text/json;charset=utf-8, ${encodeURIComponent(configFile)}`);
+    downloadButton.setAttribute("download", "config.sxcu");

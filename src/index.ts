@@ -104,6 +104,10 @@ app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res
     res.render("dashboard/uploads", {fileTypes});
 });
 
+app.get("/dashboard/settings", isAuthenticated, getUser, (req, res) => {
+    res.render("dashboard/settings");
+});
+
 app.get("/dashboard/collection/create/:name", isAuthenticated, getUser, async (req, res) => {
     const {name} = req.params;
     let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
@@ -134,6 +138,12 @@ app.get("/:filename", (async (req, res) => {
 
     return res.sendFile(filePath);
 }));
+
+app.post("/copy_website", isAuthenticated, getUser, async (req, res) => {
+    const {url} = req.query;
+
+    if(!url) return;
+});
 
 app.post("/upload", async (req, res) => {
     const key = req.query["key"] as string;
