@@ -11,7 +11,7 @@ block body
             b Do not share your token with anyone!
             
   script.
-    const configFile = {
+    const configFile = JSON.stringify({
         Version: "14.1.0",
         Name: "Localhost",
         DestinationType: "ImageUploader, FileUploader",
@@ -24,7 +24,7 @@ block body
         FileFormName: "file",
         URL: "{json:file.url}",
         DeletionURL: "{json:file.delete_url}"
-    }
+    });
 
     const downloadButton = document.querySelector("#download_config");
     downloadButton.setAttribute("href", `data:'text/json;charset=utf-8, ${encodeURIComponent(configFile)}`);
