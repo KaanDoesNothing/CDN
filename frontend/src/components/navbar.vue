@@ -14,7 +14,7 @@ export default defineComponent({
 <template>
     <div class="navbar bg-base-200">
         <div class="navbar-start">
-            <router-link class="btn btn-ghost normal-case text-xl" to="/">TruckersHub</router-link>
+            <router-link class="btn btn-ghost normal-case text-xl" to="/">CDN</router-link>
         </div>
         <div class="navbar-end">
             <router-link class="btn" v-if="state.user" to="/dashboard/statistics">Dashboard</router-link>
