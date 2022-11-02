@@ -30,6 +30,22 @@ app.locals.modules = {
 app.set("view engine", "pug").set("views", path.join(__dirname, "../views"));
 app.use(express.static(uploadsDir));
 
+app.get("/:filename", (async (req, res, next) => {
+    const {filename} = req.params;
+
+    const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
+
+    if(!file) return next();
+
+    const filePath = path.join(__dirname, "../uploads", file.file_id);
+
+    res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
+    res.setHeader("Content-Transfer-Encoding", "binary");
+    res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
+
+    return res.sendFile(filePath);
+}));
+
 const sessionMiddleware = expressSession({
     secret: "hmmm",
     resave: false,
@@ -107,22 +123,6 @@ app.post("/dashboard/collections/create", isAuthenticated, getUser, async (req, 
 
     return res.json({success: "Collection has been created!"});
 });
-
-app.get("/:filename", (async (req, res, next) => {
-    const {filename} = req.params;
-
-    const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
-
-    if(!file) return next();
-
-    const filePath = path.join(__dirname, "../uploads", file.file_id);
-
-    res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
-    res.setHeader("Content-Transfer-Encoding", "binary");
-    res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
-
-    return res.sendFile(filePath);
-}));
 
 app.post("/upload", async (req, res) => {
     const key = req.query["key"] as string;
