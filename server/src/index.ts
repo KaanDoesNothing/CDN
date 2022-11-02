@@ -28,7 +28,7 @@ app.locals.modules = {
 }
 
 app.set("view engine", "pug").set("views", path.join(__dirname, "../views"));
-// app.use(express.static(uploadsDir));
+app.use(express.static(uploadsDir));
 
 const sessionMiddleware = expressSession({
     secret: "hmmm",
