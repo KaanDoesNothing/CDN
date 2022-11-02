@@ -30,12 +30,12 @@ app.locals.modules = {
 app.set("view engine", "pug").set("views", path.join(__dirname, "../views"));
 app.use(express.static(uploadsDir));
 
-app.get("/:filename", (async (req, res, next) => {
+app.get("/:filename", (async (req, res) => {
     const {filename} = req.params;
 
     const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
 
-    if(!file) return next();
+    if(!file) return;
 
     const filePath = path.join(__dirname, "../uploads", file.file_id);
 
