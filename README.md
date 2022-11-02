@@ -2,7 +2,9 @@ Sharex File server(WIP)
 
 DO NOT USE THE DOCKERFILE AS I DIDN'T MAKE IT YET
 
-*Create a config.json file in the main folder*
+*Setup Guide*
+
+*Create a config.json file in the server folder*
 **Config Example**
 
 ```json
@@ -16,3 +18,13 @@ DO NOT USE THE DOCKERFILE AS I DIDN'T MAKE IT YET
         }
     }
 ```
+*Open the server folder in terminal*
+*Run yarn*
+*Run yarn run build*
+*Node . to start the process*
+
+*Open the frontend folder in terminal*
+*Run yarn*
+*Run yarn run build*
+
+**DONE**
