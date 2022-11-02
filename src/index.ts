@@ -177,7 +177,7 @@ app.post("/upload", async (req, res) => {
 
     user.uploads.push(newUpload);
 
-    user.save();
+    await user.save();
     
     return res.json({
         status: 200,
