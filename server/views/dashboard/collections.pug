@@ -1,0 +1,14 @@
+extends ../layouts/dashboard
+
+block body
+    div.p-5
+        table(class="table w-full -z-40")
+                thead
+                    tr
+                        th Name
+                        th Files
+                tbody()
+                    for collection in user.collections
+                        tr
+                            th=collection.name
+                            th=collection.files.length

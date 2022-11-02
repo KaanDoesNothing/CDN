@@ -28,7 +28,7 @@ app.locals.modules = {
 }
 
 app.set("view engine", "pug").set("views", path.join(__dirname, "../views"));
-app.use(express.static(uploadsDir));
+// app.use(express.static(uploadsDir));
 
 const sessionMiddleware = expressSession({
     secret: "hmmm",
@@ -44,43 +44,35 @@ app.use(expressFileUpload({
 
 app.use(defaultParams);
 
-app.get("/auth/session", isAuthenticated, getUser, (req, res) => {
+app.get("/api/session", isAuthenticated, getUser, (req, res) => {
     res.json(res.locals.user);
-});
-
-app.get("/auth/login", (req, res) => {
-    return res.render("auth/login");
 });
 
 app.post("/auth/login", async (req, res) => {
     const {email, password} = req.body;
 
-    if(!email) return res.render("error", {message: "Provide an email!"});
+    if(!email) return res.json({error: "Provide an email!"});
 
     const existingUser = await User.findOne({where: {email: email?.toString()}});
-    if(!existingUser) return res.render("error", {message: "User doesn't exist!"});
+    if(!existingUser) return res.json({error: "User doesn't exist!"});
 
     const passwordCorrect = password === existingUser.password || await comparePassword(password, existingUser.password);
 
-    if(!passwordCorrect) return res.render("error", {message: "Invalid password"});
+    if(!passwordCorrect) return res.json({error: "Invalid password"});
 
     (req.session as any).user = existingUser.token;
 
-    return res.redirect("/dashboard/uploads");
-});
-
-app.get("/auth/register", (req, res) => {
-    return res.render("auth/register");
+    return res.json({success: "Hmm"});
 });
 
 app.post("/auth/register", async (req, res) => {
     const {email, password} = req.body;
     
-    if(!email || !password) return res.render("error", {message: "You didn't provide a username or password!"});
+    if(!email || !password) return res.json({error: "You didn't provide a username or password!"});
 
     const existingUser = await User.findOne({where: {email}});
 
-    if(existingUser) return res.render("error", {message: "User already exists!"});
+    if(existingUser) return res.json({error: "User already exists!"});
 
     const hashedPassword = await hashPassword(password);
     if(!hashedPassword) return;
@@ -91,44 +83,36 @@ app.post("/auth/register", async (req, res) => {
 
     (req.session as any).user = user.token;
 
-    return res.redirect("/dashboard/uploads");
+    return res.json({success: "Hmm"});
 });
 
-app.get("/", (req, res) => {
-    return res.render("home");
-});
+// app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
+//     const fileTypes = await Upload.createQueryBuilder("upload").select("DISTINCT file_type").execute();
 
-app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
-    const fileTypes = await Upload.createQueryBuilder("upload").select("DISTINCT file_type").execute();
+//     return res.render("dashboard/uploads", {fileTypes});
+// });
 
-    res.render("dashboard/uploads", {fileTypes});
-});
+// app.get("/dashboard/collection/create/:name", isAuthenticated, getUser, async (req, res) => {
+//     const {name} = req.params;
+//     let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
+//     if(!user) return;
 
-app.get("/dashboard/settings", isAuthenticated, getUser, (req, res) => {
-    res.render("dashboard/settings");
-});
+//     const newCollection = Collection.create({name});
 
-app.get("/dashboard/collection/create/:name", isAuthenticated, getUser, async (req, res) => {
-    const {name} = req.params;
-    let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
-    if(!user) return;
+//     await newCollection.save();
 
-    const newCollection = Collection.create({name});
+//     user.collections.push(newCollection);
+//     await user.save();
 
-    await newCollection.save();
+//     return res.sendStatus(200);
+// });
 
-    user.collections.push(newCollection);
-    await user.save();
-
-    return res.sendStatus(200);
-});
-
-app.get("/:filename", (async (req, res) => {
+app.get("/:filename", (async (req, res, next) => {
     const {filename} = req.params;
 
     const file = await Upload.findOne({where: {file_name: filename}, relations: {author: true}});
 
-    if(!file) return res.json({error: "File doesn't exist!"});
+    if(!file) return next();
 
     const filePath = path.join(__dirname, "../uploads", file.file_id);
 
@@ -138,12 +122,6 @@ app.get("/:filename", (async (req, res) => {
 
     return res.sendFile(filePath);
 }));
-
-app.post("/copy_website", isAuthenticated, getUser, async (req, res) => {
-    const {url} = req.query;
-
-    if(!url) return;
-});
 
 app.post("/upload", async (req, res) => {
     const key = req.query["key"] as string;
@@ -185,6 +163,12 @@ app.post("/upload", async (req, res) => {
             url: `https://${req.hostname}/${file.name}`
         }
     });
+});
+
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
 
 app.listen(8006);

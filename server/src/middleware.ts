@@ -3,7 +3,7 @@ import { Upload } from "./entities/upload";
 import { User } from "./entities/user";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if(!req.session.user) return res.redirect("/auth/login");
+    if(!req.session.user) return res.json({error: "You are not authenticated"});
 
     next();
 }
@@ -17,7 +17,7 @@ export const defaultParams = (req: Request, res: Response, next: NextFunction) =
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
     const {file_type, file_name} = req.query;
 
-    let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
+    let user = await User.findOne({where: {token: req.session.user, collections: {author: {token: req.session.user}}}, relations: {collections: {files: true}}});
 
     if(user) {
         if(file_type) {
