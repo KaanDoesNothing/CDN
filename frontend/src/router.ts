@@ -3,6 +3,7 @@ import Home from "./pages/home.vue";
 import Login from "./pages/authentication/login.vue";
 import Register from "./pages/authentication/register.vue";
 import Uploads from "./pages/dashboard/uploads/index.vue";
+import UploadsManage from "./pages/dashboard/uploads/manage.vue";
 import Settings from "./pages/dashboard/settings.vue";
 import Collections from "./pages/dashboard/collections/index.vue";
 import CollectionsCreate from "./pages/dashboard/collections/create.vue";
@@ -42,6 +43,11 @@ const routes = [
         path: "/dashboard/collections/create",
         name: "Create Collection",
         component: CollectionsCreate
+    },
+    {
+        path: "/dashboard/uploads/:id",
+        name: "Manage Upload",
+        component: UploadsManage
     }
 ]
 
