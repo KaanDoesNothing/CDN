@@ -92,20 +92,21 @@ app.post("/auth/register", async (req, res) => {
 //     return res.render("dashboard/uploads", {fileTypes});
 // });
 
-// app.get("/dashboard/collection/create/:name", isAuthenticated, getUser, async (req, res) => {
-//     const {name} = req.params;
-//     let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
-//     if(!user) return;
+app.post("/dashboard/collections/create", isAuthenticated, getUser, async (req, res) => {
+    const {name} = req.body;
+    
+    let user = await User.findOne({where: {token: req.session.user}, relations: {collections: {files: true}}});
+    if(!user) return;
 
-//     const newCollection = Collection.create({name});
+    const newCollection = Collection.create({name});
 
-//     await newCollection.save();
+    await newCollection.save();
 
-//     user.collections.push(newCollection);
-//     await user.save();
+    user.collections.push(newCollection);
+    await user.save();
 
-//     return res.sendStatus(200);
-// });
+    return res.json({success: "Collection has been created!"});
+});
 
 app.get("/:filename", (async (req, res, next) => {
     const {filename} = req.params;

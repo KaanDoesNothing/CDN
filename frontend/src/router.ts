@@ -2,9 +2,10 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/home.vue";
 import Login from "./pages/authentication/login.vue";
 import Register from "./pages/authentication/register.vue";
-import Uploads from "./pages/dashboard/uploads.vue";
+import Uploads from "./pages/dashboard/uploads/index.vue";
 import Settings from "./pages/dashboard/settings.vue";
-import Collections from "./pages/dashboard/collections.vue";
+import Collections from "./pages/dashboard/collections/index.vue";
+import CollectionsCreate from "./pages/dashboard/collections/create.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         path: "/dashboard/collections",
         name: "Collections",
         component: Collections
+    },
+    {
+        path: "/dashboard/collections/create",
+        name: "Create Collection",
+        component: CollectionsCreate
     }
 ]
 
