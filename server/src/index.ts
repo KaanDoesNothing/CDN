@@ -40,13 +40,17 @@ app.get("/:filename", (async (req, res) => {
 
     const filePath = path.join(__dirname, "../uploads", file.file_id);
 
-    res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
+    // res.setHeader("Content-Disposition", "attachment; filename=" + file.file_name);
     res.setHeader("Content-Transfer-Encoding", "binary");
     res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
 
-    const fetched = await minioClient.getObject("cdn", file.file_id);
+    try {
+        const fetched = await minioClient.getObject("cdn", file.file_id);
 
-    fetched.pipe(res);
+        fetched.pipe(res);
+    }catch(err) {
+        return res.json({error: "File doesn't exist!"});
+    }
 }));
 
 const sessionMiddleware = expressSession({
