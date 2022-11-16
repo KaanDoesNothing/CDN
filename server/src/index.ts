@@ -15,6 +15,7 @@ fs.mkdirSync(uploadsDir, {recursive: true});
 import {db} from "./db";
 import { defaultParams, getUser, isAuthenticated } from "./middleware";
 import { Collection } from "./entities/collection";
+import { minioClient } from "./minio";
 
 db.connect();
 
@@ -43,7 +44,9 @@ app.get("/:filename", (async (req, res) => {
     res.setHeader("Content-Transfer-Encoding", "binary");
     res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
 
-    fs.createReadStream(filePath).pipe(res);
+    const fetched = await minioClient.getObject("cdn", file.file_id);
+
+    fetched.pipe(res);
 }));
 
 const sessionMiddleware = expressSession({
@@ -103,12 +106,6 @@ app.post("/auth/register", async (req, res) => {
     return res.json({success: "Hmm"});
 });
 
-// app.get("/dashboard/uploads", isAuthenticated ,getUser, async (req: Request, res: Response) => {
-//     const fileTypes = await Upload.createQueryBuilder("upload").select("DISTINCT file_type").execute();
-
-//     return res.render("dashboard/uploads", {fileTypes});
-// });
-
 app.post("/dashboard/collections/create", isAuthenticated, getUser, async (req, res) => {
     const {name} = req.body;
     
@@ -142,7 +139,8 @@ app.post("/upload", async (req, res) => {
 
     const splitMine = file.mimetype.split("/");
 
-    await file.mv(path.join(__dirname, "../uploads", `${fileID}`));
+    await minioClient.putObject("cdn", fileID, file.data);
+    // await file.mv(path.join(__dirname, "../uploads", `${fileID}`));
 
     const newUpload = Upload.create({
         upload_type: splitMine[0],
