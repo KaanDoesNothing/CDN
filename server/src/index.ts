@@ -55,7 +55,8 @@ const sessionMiddleware = expressSession({
 app.use(sessionMiddleware);
 
 app.use(expressFileUpload({
-    createParentPath: true
+    createParentPath: true,
+    limits: {fileSize: 50 * 1024 * 1024 * 1024}
 }));
 
 app.use(defaultParams);
