@@ -64,8 +64,6 @@ app.use(sessionMiddleware);
 app.use(expressFileUpload({
     createParentPath: true,
     limits: {fileSize: 50 * 1024 * 1024 * 1024},
-    useTempFiles: true,
-    tempFileDir: "../tmp"
 }));
 
 app.use(defaultParams);
