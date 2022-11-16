@@ -43,7 +43,7 @@ app.get("/:filename", (async (req, res) => {
     res.setHeader("Content-Transfer-Encoding", "binary");
     res.setHeader("Content-Type", `${file.upload_type}/${file.file_type}`);
 
-    return res.sendFile(filePath);
+    fs.createReadStream(filePath).pipe(res);
 }));
 
 const sessionMiddleware = expressSession({

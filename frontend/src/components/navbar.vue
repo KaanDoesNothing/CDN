@@ -12,6 +12,13 @@ export default defineComponent({
 </script>
 
 <template>
+    <!-- <div class="p-4 min-w-screen bg-gray-800 flex flex-row">
+        <div class="flex justify-start">
+            <label class="font-sans font-bold">CDN</label>
+        </div>
+
+        <div class="flex justify-end">Login</div>
+    </div> -->
     <div class="navbar bg-base-200">
         <div class="navbar-start">
             <router-link class="btn btn-ghost normal-case text-xl" to="/">CDN</router-link>
