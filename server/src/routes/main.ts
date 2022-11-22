@@ -44,7 +44,7 @@ main.post("/upload", async (req, res) => {
     return res.json({
         status: 200,
         file: {
-            url: `https://${req.hostname}/${file.name.replace(" ", "%20")}`
+            url: encodeURI(`https://${req.hostname}/${file.name}`)
         }
     });
 });
