@@ -44,7 +44,7 @@ main.post("/upload", async (req, res) => {
     return res.json({
         status: 200,
         file: {
-            url: `https://${req.hostname}/${file.name}`
+            url: `https://${req.hostname}/${file.name.replace(" ", "%20")}`
         }
     });
 });
@@ -67,7 +67,6 @@ main.get("/:filename", (async (req, res) => {
 
     try {
         const fetched = await minioClient.getObject("cdn", file.file_id);
-
         fetched.pipe(res);
     }catch(err) {
         return res.json({error: "File doesn't exist!"});
