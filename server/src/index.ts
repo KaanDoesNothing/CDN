@@ -4,6 +4,7 @@ import expressFileUpload from "express-fileupload";
 import expressSession from "express-session";
 import path from "path";
 import fs from "fs";
+import cors from "cors";
 
 const uploadsDir = path.join(__dirname, "../uploads");
 
@@ -17,6 +18,7 @@ import { main } from "./routes/main";
 db.connect();
 
 const app = express();
+app.use(cors());
 
 app.use(express.json({}));
 app.use(express.urlencoded({extended: true}));
