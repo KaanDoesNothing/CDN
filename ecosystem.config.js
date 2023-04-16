@@ -4,7 +4,8 @@ module.exports = {
             name: "CDN",
             exec_mode: "cluster",
             instances: "max",
-            script: "./.output/server/index.mjs -p 8006"
+            port: 8006,
+            script: "./.output/server/index.mjs"
         }
     ]
 }
