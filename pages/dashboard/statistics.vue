@@ -1,11 +1,11 @@
 <template>
-$END$
+
 </template>
 
-<script>
-export default {
-name: "statistics"
-}
+<script lang="ts" setup>
+definePageMeta({
+    layout: "dashboard"
+});
 </script>
 
 <style scoped>

@@ -1,13 +1,11 @@
-<template>
-$END$
-</template>
+<script setup lang="ts">
+import { useGlobalStore } from "@/stores/global";
+import {backgrounds} from "../information";
 
-<script>
-export default {
-name: "default"
-}
+const layout = "default";
+
 </script>
 
-<style scoped>
-
-</style>
+<template>
+    <slot></slot>
+</template>
