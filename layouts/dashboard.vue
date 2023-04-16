@@ -22,7 +22,7 @@ const router = useRouter();
                     <label class="text-center normal-case text-xl">Dashboard</label>
                     <ul class="menu mt-2">
                         <li><RouterLink class="rounded" to="/dashboard/statistics">Statistics</RouterLink></li>
-                        <li> <RouterLink class="rounded" to="/dashboard/settings">Settings</RouterLink></li>
+                        <li><RouterLink class="rounded" to="/dashboard/files">Files</RouterLink></li>
                     </ul>
                 </label>
             </div>
