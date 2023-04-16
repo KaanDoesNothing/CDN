@@ -1,9 +1,14 @@
 import {storageClient} from "~/server/storage";
+import {DB_File} from "~/server/db";
 
 export default defineEventHandler(async (e) => {
     if(e.req.method === "GET") {
         const file_name = e.context?.params?.file;
-        const fetched = await storageClient.getObject("cdn", "c4080465-b36a-40ba-880b-4ef20617592a");
+        const file = await DB_File.findOne({file_name});
+
+        if(!file) return {error: {message: "File doesn't exist"}}
+
+        const fetched = await storageClient.getObject("cdn", file.file_id);
 
         return fetched.read();
     }
