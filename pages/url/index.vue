@@ -45,7 +45,9 @@ const error = ref(undefined);
 const result = ref("");
 
 const create = async (e: Event) => {
-    let body: any = {url: url.value, password: password.value};
+    let body: any = {url: url.value};
+
+    if(password.value.length > 0) body.password = password.value;
 
     if(state.token) body.token = state.token;
 
