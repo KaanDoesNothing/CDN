@@ -10,7 +10,10 @@ export default defineEventHandler(async (e) => {
 
         const fetched = await storageClient.getObject("cdn", file.file_id);
 
-        return fetched.read();
+        // fetched.pipe(e.res);
+        // fetched.end
+
+        return sendStream(e, fetched);
     }
 });
 
