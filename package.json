@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@types/busboy": "^1.5.0",
+    "nuxt": "^3.4.1"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.6.6",
+    "@pinia/nuxt": "^0.4.8",
+    "@types/bcrypt": "^5.0.0",
+    "@types/minio": "^7.0.18",
+    "bcrypt": "^5.1.0",
+    "busboy": "^1.6.0",
+    "daisyui": "^2.51.5",
+    "minio": "^7.0.33",
+    "mongoose": "^7.0.3",
+    "pinia": "^2.0.34",
+    "zod": "^3.21.4"
+  }
+}
