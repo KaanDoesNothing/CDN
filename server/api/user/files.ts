@@ -10,7 +10,7 @@ export default defineEventHandler(async (e) => {
         const user = await DB_User.findOne({token: body.token});
         if(!user) return {error: {message: "Invalid token"}};
 
-        const files = await DB_File.find({author: user.email}).sort({createdAt: "DESC"});
+        const files = await DB_File.find({author: user.email}).sort({createdAt: "desc"});
 
         return {data: {files}};
     }

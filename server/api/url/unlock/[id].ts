@@ -1,10 +1,9 @@
-import {storageClient} from "~/server/storage";
-import {DB_File, DB_URL} from "~/server/db";
+import {DB_URL} from "~/server/db";
 import {unlockURLSchema, urlSchema} from "~/server/schemas";
 import {comparePassword} from "~/server/utils";
 
 export default defineEventHandler(async (e) => {
-    if(e.req.method === "GET") {
+    if(e.req.method === "POST") {
         const body = await readBody(e);
         const id = e.context?.params?.id;
         const file = await DB_URL.findOne({id});

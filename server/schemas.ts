@@ -6,3 +6,14 @@ export const userSchema = z.object({
 });
 
 export const tokenSchema = z.string().min(10);
+
+export const urlSchema = z.object({
+    token: tokenSchema.optional(),
+    url: z.string().url(),
+    password: z.string().min(1).optional(),
+    once: z.boolean().optional()
+})
+
+export const unlockURLSchema = z.object({
+    password: z.string().min(1)
+});
