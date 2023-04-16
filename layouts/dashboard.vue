@@ -10,6 +10,9 @@ const router = useRouter();
 </script>
 
 <template>
+    <Head>
+        <Title>CDN - Dashboard</Title>
+    </Head>
     <div v-if="state.token">
         <div class="drawer drawer-mobile">
             <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />

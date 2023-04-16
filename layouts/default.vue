@@ -7,5 +7,8 @@ const layout = "default";
 </script>
 
 <template>
+    <Head>
+        <Title>CDN</Title>
+    </Head>
     <slot></slot>
 </template>

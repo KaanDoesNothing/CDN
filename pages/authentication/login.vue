@@ -46,6 +46,7 @@ async function authenticate(e: Event) {
     if(res.data) {
         useCookie("token").value = res.data.token;
         await user.authenticate();
+        await router.push("/");
     }else if(res.error) {
         error.value = res.error
     }
