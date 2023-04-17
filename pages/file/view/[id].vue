@@ -3,6 +3,7 @@
         <Meta :content="fileInfo.file_name" property="og:title"/>
         <Meta :content="new Date(fileInfo.createdAt).toDateString()" property="og:description"/>
         <Meta :content="fetchedFileInfo.data.url" property="og:image"></Meta>
+        <Meta :content="fetchedFileInfo.data.url" content="summary_large_image"></Meta>
     </Head>
   <div class="flex justify-center mt-10 p-5">
       <div class="flex flex-col text-center">
