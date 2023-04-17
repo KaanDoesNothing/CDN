@@ -63,7 +63,8 @@ export default defineEventHandler(async (e) => {
             file_type,
             file_id,
             file_ext,
-            mime_type: file.mimetype
+            mime_type: file.mimetype,
+            served: 0
         });
 
         return {

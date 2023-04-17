@@ -32,7 +32,7 @@ import {useRouter} from "vue-router";
 
 import {useGlobalStore} from "~/stores/global";
 const router = useRouter();
-const user = useGlobalStore();
+const state = useGlobalStore();
 
 const email = ref("");
 const password = ref("");
@@ -43,9 +43,11 @@ async function authenticate(e: Event) {
 
     const res: any = await $fetch("/api/user/login", {method: "POST", body: {email: email.value, password: password.value}});
 
+    console.log("Fetched token", res.data.token);
     if(res.data) {
+        state.$patch({token: res.data.token});
         useCookie("token").value = res.data.token;
-        await user.authenticate();
+        await state.authenticate();
         await router.push("/");
     }else if(res.error) {
         error.value = res.error

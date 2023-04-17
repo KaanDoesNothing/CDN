@@ -10,25 +10,30 @@ export interface IGlobalStore {
 
 export const useGlobalStore = defineStore("global", {
     state: (): IGlobalStore => {
-        return {}
+        return {token: undefined}
     },
     actions: {
         async authenticate() {
-            const token = useCookie("token").value;
+            console.log("Authenticating!");
+            if(!this.token) {
+                const token = useCookie("token").value;
 
-            if(!token) return;
+                console.log("Stored token", token);
 
-            if(token) this.token = token;
+                if(token) this.token = token;
+            }
+
+            console.log("Token", this.token);
+
             await this.fetchUser();
 
             if(this.user) {
                 console.log(`Logged in as ${this.user.email}`);
-
-                const router = useRouter();
-                const route = useRoute();
+            }else {
+                console.log("Invalid token");
             }
 
-            return true;
+            return;
         },
         async fetchUser() {
             const config = useRuntimeConfig();

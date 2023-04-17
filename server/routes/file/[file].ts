@@ -10,6 +10,18 @@ export default defineEventHandler(async (e) => {
 
         const fetched = await storageClient.getObject("cdn", file.file_id);
 
+        if(!file.served) {
+            file.served = 1;
+        }else {
+            file.served++;
+        }
+
+        if(!file.file_type) {
+            file.file_type = file.mime_type.split("/")[0];
+        }
+
+        await file.save();
+
         // fetched.pipe(e.res);
         // fetched.end
 

@@ -12,7 +12,8 @@ export const FileSchema = new mongoose.Schema({
     file_name: {type: mongoose.SchemaTypes.String, required: true},
     file_ext: {type: mongoose.SchemaTypes.String, required: true},
     file_type: {type: mongoose.SchemaTypes.String, required: true},
-    mime_type: {type: mongoose.SchemaTypes.String, required: true}
+    mime_type: {type: mongoose.SchemaTypes.String, required: true},
+    served: {type: mongoose.SchemaTypes.Number, required: true}
 }, {timestamps: true});
 
 export const URLSchema = new mongoose.Schema({
