@@ -5,6 +5,7 @@
         <Meta :content="fetchedFileInfo.data.url" property="og:image"></Meta>
         <Meta content="summary_large_image" name="twitter:card"></Meta>
         <Meta content="@twitter_handle" name="twitter:site"></Meta>
+        <Meta :content="fileInfo.file_name" name="twitter:title"></Meta>
         <Meta :content="description" name="twitter:description"></Meta>
         <Meta :content="fetchedFileInfo.data.url" name="twitter:image:src"></Meta>
     </Head>
