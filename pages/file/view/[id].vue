@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 const id = useRoute().params.id;
 
-const fetchedFileInfo: any = await $fetch(`/file/info/${id}`);
+const fetchedFileInfo: any = await $fetch(`/api/file/info/${id}`);
 const fileInfo = fetchedFileInfo.data.file;
 
 </script>

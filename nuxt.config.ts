@@ -13,7 +13,8 @@ export default defineNuxtConfig({
             path: "auto",
             region: "dusseldorf",
             ssl: false
-        }
+        },
+        BASE: process.env.BASE
     },
     nitro: {
         plugins: ["~/server/index.ts"]

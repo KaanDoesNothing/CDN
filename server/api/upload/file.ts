@@ -37,6 +37,8 @@ const useFiles = async (event: H3Event) => {
 }
 
 export default defineEventHandler(async (e) => {
+    const config = useRuntimeConfig();
+
     if(e.req.method === "POST") {
         const { key } = getQuery(e);
         if(!key) return {error: "Invalid Key!"};
@@ -70,7 +72,7 @@ export default defineEventHandler(async (e) => {
         return {
             status: 200,
             file: {
-                url: encodeURI(`https://${e.req.headers.host}/file/view/${file.filename}`)
+                url: encodeURI(`${config.BASE}/file/view/${file.filename}`)
             }
         }
 
