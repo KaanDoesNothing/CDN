@@ -59,7 +59,7 @@ const create = async (e: Event) => {
     const res: any = await $fetch("/api/upload/url", {method: "POST", body: body});
 
     if(res.data) {
-        result.value = `${window.location.href}/${res.data.id}`;
+        result.value = res.data.url;
     }
 }
 

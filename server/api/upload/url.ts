@@ -4,6 +4,8 @@ import {urlSchema} from "~/server/schemas";
 import {hashPassword} from "~/server/utils";
 export default defineEventHandler(async (e) => {
     if(e.req.method === "POST") {
+        const config = useRuntimeConfig();
+
         const body = await readBody(e);
         const isValid = urlSchema.safeParse(body);
         if(!isValid.success) return {error: isValid.error};
@@ -23,7 +25,7 @@ export default defineEventHandler(async (e) => {
 
         await DB_URL.create(content);
 
-        return {data: {id: content.id}};
+        return {data: {url: `${config.BASE}/url/${id}`}};
     }
 });
 

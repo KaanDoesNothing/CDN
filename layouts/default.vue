@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { useGlobalStore } from "@/stores/global";
-import {backgrounds} from "../information";
+const config = useRuntimeConfig();
 
 const layout = "default";
-
 </script>
 
 <template>
     <Head>
-        <Title>CDN</Title>
+        <Title>{{ config.public.TITLE }}</Title>
     </Head>
     <slot></slot>
 </template>

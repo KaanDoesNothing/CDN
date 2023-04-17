@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/content"],
     // @ts-ignore
     runtimeConfig: {
         MONGODB: process.env.MONGODB,
@@ -14,7 +14,10 @@ export default defineNuxtConfig({
             region: "dusseldorf",
             ssl: false
         },
-        BASE: process.env.BASE
+        BASE: process.env.BASE,
+        public: {
+            TITLE: process.env.TITLE
+        }
     },
     nitro: {
         plugins: ["~/server/index.ts"]

@@ -9,19 +9,20 @@
         <Meta :content="description" name="twitter:description"></Meta>
         <Meta :content="fetchedFileInfo.data.url" name="twitter:image:src"></Meta>
     </Head>
-  <div class="flex justify-center mt-10 p-5">
-      <div class="flex flex-col text-center">
-          <template v-if="fileInfo.file_type === 'image'">
-              <img :src="fetchedFileInfo.data.url" class="rounded-md">
-          </template>
+    <div class="flex justify-center mt-10 p-5">
+          <div class="flex flex-col text-center">
+              <template v-if="fileInfo.file_type === 'image'">
+                  <img :src="fetchedFileInfo.data.url" class="rounded-md">
+              </template>
 
-          <label class="font-bold">{{fileInfo.file_name}}</label>
-      </div>
-  </div>
+              <label class="font-bold">{{fileInfo.file_name}}</label>
+          </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
 const id = useRoute().params.id;
+const config = useRuntimeConfig();
 
 const fetchedFileInfo: any = await $fetch(`/api/file/info/${id}`);
 const fileInfo = fetchedFileInfo.data.file;

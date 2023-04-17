@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGlobalStore } from "@/stores/global";
+import { useGlobalStore } from "~/stores/global";
 
 const config = useRuntimeConfig();
 
@@ -11,8 +11,9 @@ const router = useRouter();
 
 <template>
     <Head>
-        <Title>CDN - Dashboard</Title>
+        <Title>{{ config.public.TITLE }} - Dashboard</Title>
     </Head>
+
     <div v-if="state.token">
         <div class="drawer drawer-mobile">
             <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />

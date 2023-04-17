@@ -1,5 +1,6 @@
 <template>
     <Html data-theme="night"></Html>
+
     <NuxtLoadingIndicator />
     <NuxtLayout>
         <Navbar></Navbar>
