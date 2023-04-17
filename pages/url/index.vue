@@ -19,13 +19,18 @@
                     </label>
                     <input class="input input-bordered w-full max-w-xs" type="text" name="email" v-model="url"/>
                     <label class="label">
-                        <span class="label-text">Password</span>
+                        <span class="label-text">Password(Optional)</span>
                     </label>
                     <input class="input input-bordered w-full max-w-xs" type="password" name="password" v-model="password"/>
                     <div class="card-actions text-center mt-2">
                         <button class="btn btn-ghost btn-block text-white" type="submit">Create</button>
                     </div>
                 </form>
+            </div>
+
+            <div class="flex justify-center">
+                <code class="mockup-code text-white" v-html="codeExample">
+                </code>
             </div>
         </div>
     </div>
@@ -56,13 +61,15 @@ const create = async (e: Event) => {
     if(res.data) {
         result.value = `${window.location.href}/${res.data.id}`;
     }
-
-    //
-    // if(res.data) {
-    //     useCookie("token").value = res.data.token;
-    //     await user.authenticate();
-    // }else if(res.error) {
-    //     error.value = res.error
-    // }
 }
+
+const codeExample = (`
+    /api/upload/url {
+        url: string;
+        token?: string;
+        password?: string;
+        once?: boolean;
+    }
+`).split("\n").join("<br>").trim();
+
 </script>

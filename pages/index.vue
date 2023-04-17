@@ -16,5 +16,5 @@
 
   (async () => {
       servedFiles.value = (await $fetch("/api/stats/files") as any).data.files;
-  })()
+  })();
 </script>

@@ -70,7 +70,7 @@ export default defineEventHandler(async (e) => {
         return {
             status: 200,
             file: {
-                url: encodeURI(`https://${e.req.headers.host}/file/${file.filename}`)
+                url: encodeURI(`https://${e.req.headers.host}/file/view/${file.filename}`)
             }
         }
 
