@@ -12,5 +12,9 @@
 </template>
 
 <script lang="ts" setup>
-  const servedFiles = (await $fetch("/api/stats/files")).data.files;
+  const servedFiles = ref("Loading...");
+
+  (async () => {
+      servedFiles.value = (await $fetch("/api/stats/files") as any).data.files;
+  })()
 </script>
