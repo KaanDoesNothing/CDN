@@ -25,7 +25,7 @@ export default defineEventHandler(async (e) => {
 
         await DB_URL.create(content);
 
-        return {data: {url: `${config.BASE}/url/${id}`}};
+        return {data: {url: `${config.BASE}/url/${content.id}`}};
     }
 });
 

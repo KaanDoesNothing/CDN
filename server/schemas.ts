@@ -17,3 +17,9 @@ export const urlSchema = z.object({
 export const unlockURLSchema = z.object({
     password: z.string().min(1)
 });
+
+export const addToCollectionSchema = z.object({
+    token: tokenSchema,
+    collection: z.string().min(1),
+    file_id: z.string().min(5)
+});

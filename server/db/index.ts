@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {FileSchema, URLSchema, UserSchema} from "~/server/db/schemas";
+import {CollectionSchema, FileSchema, URLSchema, UserSchema} from "~/server/db/schemas";
 
 const config = useRuntimeConfig();
 export const initDatabase = () => new Promise(async (resolve, reject) => {
@@ -16,3 +16,5 @@ export const initDatabase = () => new Promise(async (resolve, reject) => {
 export const DB_User = mongoose.model("User", UserSchema);
 export const DB_File = mongoose.model("Files", FileSchema);
 export const DB_URL = mongoose.model("URL", URLSchema);
+
+export const DB_Collection = mongoose.model("Collection", CollectionSchema);

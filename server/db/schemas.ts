@@ -6,6 +6,13 @@ export const UserSchema = new mongoose.Schema({
     token: {type: mongoose.SchemaTypes.String, required: true}
 }, {timestamps: true});
 
+export const CollectionSchema = new mongoose.Schema({
+    author: {type: mongoose.SchemaTypes.String, required: true},
+    name: {type: mongoose.SchemaTypes.String, required: true},
+    //Files contain file_id from FileSchema
+    files: {type: mongoose.SchemaTypes.Array, required: true}
+}, {timestamps: true});
+
 export const FileSchema = new mongoose.Schema({
     author: {type: mongoose.SchemaTypes.String, required: true},
     file_id: {type: mongoose.SchemaTypes.String, required: true},
