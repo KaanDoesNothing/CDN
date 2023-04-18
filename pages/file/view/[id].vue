@@ -70,8 +70,6 @@ const handleAdd = async () => {
         alert("File has been added to collection");
     }
 }
-
-// const content = file.file_type === "image" ? await $fetch(fetchedFileInfo.data.url) : "";
 </script>
 
 <style scoped>

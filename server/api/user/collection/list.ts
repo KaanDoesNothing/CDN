@@ -1,5 +1,6 @@
 import {DB_Collection, DB_User} from "~/server/db";
 import {tokenSchema} from "~/server/schemas";
+import {transformCollection} from "~/server/utils";
 export default defineEventHandler(async (e) => {
     if(e.req.method === "POST") {
         const config = useRuntimeConfig();
@@ -14,7 +15,11 @@ export default defineEventHandler(async (e) => {
 
         const collections = await DB_Collection.find({author: user.email});
 
-        return {data: {collections}};
+        if(!collections) return;
+
+        const res = await Promise.all((collections as any).map((row: any) => transformCollection(row)));
+
+        return {data: {collections: res}};
     }
 });
 
