@@ -2,8 +2,6 @@ import {DB_Collection, DB_File, DB_User} from "~/server/db";
 import {addToCollectionSchema} from "~/server/schemas";
 export default defineEventHandler(async (e) => {
     if(e.req.method === "POST") {
-        const config = useRuntimeConfig();
-
         const body = await readBody(e);
         const isValid = addToCollectionSchema.safeParse(body);
         if(!isValid.success) return {error: isValid.error};

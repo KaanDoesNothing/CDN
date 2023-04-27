@@ -1,8 +1,9 @@
 import Busboy from "busboy";
 import {H3Event} from "h3";
-import {DB_File, DB_User} from "~/server/db";
+import {Attachment, DB_File, DB_User} from "~/server/db";
 import {randomUUID} from "crypto";
 import {storageClient} from "~/server/storage";
+import stream from "node:stream";
 
 const useFiles = async (event: H3Event) => {
     return new Promise((resolve) => {
@@ -56,6 +57,10 @@ export default defineEventHandler(async (e) => {
         const file_ext: string = split_type[1];
 
         const file_id = randomUUID();
+
+        const writeStream = new stream.PassThrough();
+        writeStream.end(file.buffer);
+        Attachment.writeFile({filename: `${file_id}-${file.filename}`}, writeStream);
 
         await storageClient.putObject("cdn", file_id, file.buffer);
 
