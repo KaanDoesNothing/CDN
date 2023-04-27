@@ -2,7 +2,6 @@ import Busboy from "busboy";
 import {H3Event} from "h3";
 import {Attachment, DB_File, DB_User} from "~/server/db";
 import {randomUUID} from "crypto";
-import {storageClient} from "~/server/storage";
 import stream from "node:stream";
 
 const useFiles = async (event: H3Event) => {
@@ -60,9 +59,7 @@ export default defineEventHandler(async (e) => {
 
         const writeStream = new stream.PassThrough();
         writeStream.end(file.buffer);
-        Attachment.writeFile({filename: `${file_id}-${file.filename}`}, writeStream);
-
-        await storageClient.putObject("cdn", file_id, file.buffer);
+        await Attachment.writeFile({filename: `${file_id}-${file.filename}`}, writeStream);
 
         const newFileUpload = DB_File.create({
             author: author.email,

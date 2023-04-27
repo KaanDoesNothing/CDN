@@ -1,4 +1,3 @@
-import {storageClient} from "~/server/storage";
 import {DB_File} from "~/server/db";
 
 export default defineEventHandler(async (e) => {
