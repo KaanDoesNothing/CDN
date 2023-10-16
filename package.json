@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "@types/busboy": "^1.5.0",
-    "nuxt": "^3.4.1"
+    "nuxt": "^3.4.1",
+    "nuxt-security": "^0.14.4"
   },
   "dependencies": {
     "@nuxt/content": "^2.5.2",

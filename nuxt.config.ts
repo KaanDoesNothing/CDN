@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/content"],
+    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/content", "nuxt-security"],
     // @ts-ignore
     runtimeConfig: {
         MONGODB: process.env.MONGODB,
@@ -21,5 +21,11 @@ export default defineNuxtConfig({
     },
     nitro: {
         plugins: ["~/server/index.ts"]
+    },
+    security: {
+        corsHandler: {
+            origin: '*',
+            methods: '*',
+        } 
     }
 })
