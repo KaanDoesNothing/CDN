@@ -21,11 +21,5 @@ export default defineNuxtConfig({
     },
     nitro: {
         plugins: ["~/server/index.ts"]
-    },
-    security: {
-        corsHandler: {
-            origin: '*',
-            methods: '*',
-        } 
     }
 })
