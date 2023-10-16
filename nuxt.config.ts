@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/content", "nuxt-security"],
+    modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/content"],
     // @ts-ignore
     runtimeConfig: {
         MONGODB: process.env.MONGODB,
